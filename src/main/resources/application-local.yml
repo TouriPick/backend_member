@@ -52,6 +52,6 @@ kafka:
 
 jwt:
   expires-in: 86400 # 1day
-  mobile-expires-in: 31536000
+  mobile-expires-in: 31536000 # 1year
   tablet-expires-in: 31536000
   secret-key: touripickjwtsecretkey2025verysecuretouripickjwtsecretkey2025verysecure
