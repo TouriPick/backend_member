@@ -47,7 +47,7 @@ public class TokenGenerator {
         int tokenExpiresIn = tokenExpiresIn(refreshToken, deviceType);
         String tokenType = refreshToken ? "refresh" : "access";
         String token = Jwts.builder()
-                .issuer("welab")
+                .issuer("touripick")
                 .subject(userId)
                 .claim("userId", userId)
                 .claim("deviceType", deviceType)

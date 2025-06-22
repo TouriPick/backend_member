@@ -1,15 +1,19 @@
 package com.touripick.backend_member.api.open;
 
 import com.touripick.backend_member.common.dto.ApiResponseDto;
+import com.touripick.backend_member.domain.dto.EmailRequest;
+import com.touripick.backend_member.domain.dto.EmailVerifyRequest;
 import com.touripick.backend_member.domain.dto.SiteUserLoginDto;
 import com.touripick.backend_member.domain.dto.SiteUserRefreshDto;
 import com.touripick.backend_member.domain.dto.SiteUserRegisterDto;
 import com.touripick.backend_member.secret.jwt.dto.TokenDto;
+import com.touripick.backend_member.service.EmailAuthService;
 import com.touripick.backend_member.service.SiteUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserAuthController {
     private final SiteUserService siteUserService;
+    private final EmailAuthService emailAuthService;
 
     /**
      * 사용자 회원가입을 처리합니다.
@@ -35,6 +40,18 @@ public class UserAuthController {
         return ApiResponseDto.defaultOk();
     }
 
+    @PostMapping("/email")
+    public ResponseEntity<Void> requestEmailAuth(@RequestBody @Valid EmailRequest request) {
+        emailAuthService.requestEmailAuth(request.getEmail());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/email/verify")
+    public ResponseEntity<Boolean> verifyEmailAuth(@RequestBody @Valid EmailVerifyRequest request) {
+        boolean result = emailAuthService.verifyEmailCode(request.getEmail(), request.getCode());
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping(value = "/login")
     public ApiResponseDto<TokenDto.AccessRefreshToken> login(@RequestBody @Valid SiteUserLoginDto loginDto) {
         TokenDto.AccessRefreshToken token = siteUserService.login(loginDto);
@@ -47,8 +64,9 @@ public class UserAuthController {
         return ApiResponseDto.createOk(token);
     }
 
-    @GetMapping(value = "/test")
-    public ApiResponseDto<String> test() {
-        return ApiResponseDto.createOk("카나리 버전입니다.");
+    @PostMapping(value = "/logout")
+    public ApiResponseDto<String> logout(@RequestParam String userId) {
+        siteUserService.logout(userId);
+        return ApiResponseDto.createOk("로그아웃 완료");
     }
 }
