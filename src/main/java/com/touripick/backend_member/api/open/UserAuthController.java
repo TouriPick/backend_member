@@ -40,16 +40,30 @@ public class UserAuthController {
         return ApiResponseDto.defaultOk();
     }
 
+    /**
+     * 이메일 인증 코드 요청을 처리합니다.
+     * 요청 본문으로 {@link EmailRequest}를 받아 인증 코드를 이메일로 전송합니다.
+     *
+     * @param request 이메일 인증 요청 정보
+     * @return 작업 성공 여부를 담은 {@link ApiResponseDto}
+     */
     @PostMapping("/email")
-    public ResponseEntity<Void> requestEmailAuth(@RequestBody @Valid EmailRequest request) {
+    public ApiResponseDto<String> requestEmailAuth(@RequestBody @Valid EmailRequest request) {
         emailAuthService.requestEmailAuth(request.getEmail());
-        return ResponseEntity.ok().build();
+        return ApiResponseDto.createOk("인증 코드가 이메일로 전송되었습니다.");
     }
 
+    /**
+     * 이메일 인증 코드 확인을 처리합니다.
+     * 요청 본문으로 {@link EmailVerifyRequest}를 받아 인증 코드를 확인합니다.
+     *
+     * @param request 이메일 인증 확인 요청 정보
+     * @return 인증 성공 여부를 담은 {@link ApiResponseDto}
+     */
     @PostMapping("/email/verify")
-    public ResponseEntity<Boolean> verifyEmailAuth(@RequestBody @Valid EmailVerifyRequest request) {
+    public ApiResponseDto<Boolean> verifyEmailAuth(@RequestBody @Valid EmailVerifyRequest request) {
         boolean result = emailAuthService.verifyEmailCode(request.getEmail(), request.getCode());
-        return ResponseEntity.ok(result);
+        return ApiResponseDto.createOk(result);
     }
 
     @PostMapping(value = "/login")

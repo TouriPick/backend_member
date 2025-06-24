@@ -54,11 +54,11 @@ public class SiteUserService {
     public TokenDto.AccessRefreshToken login(SiteUserLoginDto loginDto) {
         SiteUser user = siteUserRepository.findByUserId(loginDto.getUserId());
         if (user == null) {
-            throw new BadParameter("아이디 확인하세요.");
+            throw new BadParameter("아이디 또는 비밀번호를 확인하세요.");
         }
 
         if( !SecureHashUtils.matches(loginDto.getPassword(), user.getUserPwd())){
-            throw new BadParameter("비밀번호를 확인하세요.");
+            throw new BadParameter("아이디 또는 비밀번호를 확인하세요.");
         }
 
         // AccessToken과 RefreshToken 생성
