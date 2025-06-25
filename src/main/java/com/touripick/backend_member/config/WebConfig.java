@@ -32,7 +32,8 @@ public class WebConfig implements WebMvcConfigurer {
                     "http://localhost:8082",    // 대체 포트
                     "http://localhost:8083",    // 대체 포트
                     "http://localhost:8084",    // 대체 포트
-                    "http://localhost:8085"     // 현재 Backend 포트
+                    "http://localhost:8085",     // 현재 Backend 포트
+                     "*"
                 )
                 // 허용할 HTTP 메서드 설정
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
