@@ -4,7 +4,7 @@ spring:
   kafka:
     bootstrap-servers: k8s-external-kafka-service:9092
     listener:
-      ack-mode: MANUAL_IMMEDIATE
+      ack-mode: MANUAL
     consumer:
       group-id: ${spring.application.name}
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
