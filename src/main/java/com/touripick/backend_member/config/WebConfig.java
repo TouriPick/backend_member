@@ -21,20 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 // 허용할 Origin 설정 (개발 환경)
-                .allowedOriginPatterns(
-                    "http://localhost:3000",    // React 기본 포트
-                    "http://localhost:5173",    // Vite 기본 포트
-                    "http://localhost:5174",    // Vite 대체 포트
-                    "http://localhost:5175",    // Vite 대체 포트
-                    "http://localhost:5176",    // Vite 대체 포트
-                    "http://localhost:8080",    // 일반적인 개발 포트
-                    "http://localhost:8081",    // 대체 포트
-                    "http://localhost:8082",    // 대체 포트
-                    "http://localhost:8083",    // 대체 포트
-                    "http://localhost:8084",    // 대체 포트
-                    "http://localhost:8085",     // 현재 Backend 포트
-                     "*"
-                )
+                .allowedOriginPatterns("*")
                 // 허용할 HTTP 메서드 설정
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 // 허용할 헤더 설정
