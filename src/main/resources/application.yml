@@ -2,7 +2,6 @@ spring:
   application:
     name: backend_member
   kafka:
-    bootstrap-servers: k8s-external-kafka-service:9092
     listener:
       ack-mode: MANUAL_IMMEDIATE
     consumer:
