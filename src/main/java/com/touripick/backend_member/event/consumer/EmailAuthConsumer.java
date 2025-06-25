@@ -16,7 +16,7 @@ public class EmailAuthConsumer {
 
     private final JavaMailSender mailSender;
 
-    @KafkaListener(topics = "email-auth-send")
+    @KafkaListener(topics = "email-auth-send", groupId = "email-auth-group")
     public void sendAuthEmail(EmailAuthEvent event, Acknowledgment ack) {
         try {
             log.info("이메일 인증 메일 발송 시작: {}", event.getEmail());
