@@ -15,14 +15,17 @@ public class KafkaMessageProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(String topic, Object message) {
-        CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topic, message);
+        // 메시지 타입에 따라 키 설정
+        String key = message.getClass().getSimpleName();
+        
+        CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topic, key, message);
         
         future.whenComplete((result, ex) -> {
             if (ex == null) {
-                log.info("Kafka 메시지 전송 성공 - Topic: {}, Partition: {}, Offset: {}", 
-                    topic, result.getRecordMetadata().partition(), result.getRecordMetadata().offset());
+                log.info("Kafka 메시지 전송 성공 - Topic: {}, Key: {}, Partition: {}, Offset: {}", 
+                    topic, key, result.getRecordMetadata().partition(), result.getRecordMetadata().offset());
             } else {
-                log.error("Kafka 메시지 전송 실패 - Topic: {}, Error: {}", topic, ex.getMessage(), ex);
+                log.error("Kafka 메시지 전송 실패 - Topic: {}, Key: {}, Error: {}", topic, key, ex.getMessage(), ex);
             }
         });
     }

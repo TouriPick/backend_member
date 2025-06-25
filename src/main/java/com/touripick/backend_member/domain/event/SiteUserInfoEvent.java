@@ -1,5 +1,6 @@
 package com.touripick.backend_member.domain.event;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.touripick.backend_member.domain.SiteUser;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class SiteUserInfoEvent {
     public static final String Topic = "userinfo";
 
